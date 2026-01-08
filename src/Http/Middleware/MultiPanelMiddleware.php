@@ -13,11 +13,12 @@ final class MultiPanelMiddleware
 {
     public function __construct(
         private ConfiguratorContract $configurator,
-    ) {}
+    ) {
+    }
 
     public function handle(Request $request, Closure $next): Response
     {
-        if($this->configurator->get('panels', false) === false) {
+        if ($this->configurator->get('panels', false) === false) {
             return $next($request);
         }
 
@@ -26,12 +27,12 @@ final class MultiPanelMiddleware
         unset($defaultConfig['panels']);
 
         $panels = $this->configurator->get('panels', [
-            $this->configurator->get('prefix') => $defaultConfig
+            $this->configurator->get('prefix') => $defaultConfig,
         ]);
 
         $currentPanel = request()->getPanelName();
 
-        if(! $currentConfig = $panels[$currentPanel]) {
+        if (! $currentConfig = $panels[$currentPanel]) {
             oops404();
         }
 

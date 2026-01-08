@@ -2,12 +2,12 @@
 
 namespace MoonShine\MultiPanels\Providers;
 
-use MoonShine\MultiPanels\MoonShineRouter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use MoonShine\Contracts\Core\DependencyInjection\RouterContract;
+use MoonShine\MultiPanels\MoonShineRouter;
 
 class MultiPanelServiceProvider extends ServiceProvider
 {
@@ -19,15 +19,15 @@ class MultiPanelServiceProvider extends ServiceProvider
             $pathPrefix = request()->path() === '' ? '' : (string) Str::of(request()->path())->before('/');
 
             $panelKey = Collection::make($panels)
-                ->mapWithKeys(fn(array $panel, string $key): array => [$key => [
+                ->mapWithKeys(fn (array $panel, string $key): array => [$key => [
                     ...$panel,
                     'prefix' => $panel['prefix'] ?? $key,
                 ]])
-                ->filter(fn(array $panel): bool => $panel['prefix'] === $pathPrefix)
+                ->filter(fn (array $panel): bool => $panel['prefix'] === $pathPrefix)
                 ->keys()
                 ->first();
 
-            if($panelKey !== null) {
+            if ($panelKey !== null) {
                 return $panelKey;
             }
 
