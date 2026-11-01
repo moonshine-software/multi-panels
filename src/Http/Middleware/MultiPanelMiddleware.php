@@ -32,7 +32,7 @@ final class MultiPanelMiddleware
 
         $currentPanel = request()->getPanelName();
 
-        if (! $currentConfig = $panels[$currentPanel]) {
+        if (! $currentConfig = $panels[$currentPanel] ?? null) {
             oops404();
         }
 

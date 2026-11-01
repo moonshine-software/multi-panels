@@ -21,14 +21,29 @@
         "ext-curl": "*",
         "ext-json": "*"
     },
+    "require-dev": {
+        "moonshine/moonshine": "5.x-dev",
+        "orchestra/testbench": "^10.0 || ^11.0",
+        "phpunit/phpunit": "^11.5 || ^12.0"
+    },
     "autoload": {
         "psr-4": {
             "MoonShine\\MultiPanels\\": "src/"
         }
     },
-    "conflict": {
-        "moonshine/moonshine": "<4.4"
+    "autoload-dev": {
+        "psr-4": {
+            "MoonShine\\MultiPanels\\Tests\\": "tests/"
+        }
     },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "conflict": {
+        "moonshine/moonshine": "<4.4 || >=6.0"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "extra": {
         "laravel": {
             "providers": [

@@ -2,11 +2,14 @@
 
 namespace MoonShine\MultiPanels\Providers;
 
+use Illuminate\Contracts\Http\Kernel;
+use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use MoonShine\Contracts\Core\DependencyInjection\RouterContract;
+use MoonShine\MultiPanels\Http\Middleware\MultiPanelMiddleware;
 use MoonShine\MultiPanels\MoonShineRouter;
 
 class MultiPanelServiceProvider extends ServiceProvider
@@ -42,6 +45,13 @@ class MultiPanelServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        //
+        // Laravel's middleware priority runs authentication first. The panel
+        // configuration has to be applied before that, or a panel with its own
+        // guard is checked against the default one.
+        $kernel = $this->app->make(Kernel::class);
+
+        if ($kernel instanceof HttpKernel) {
+            $kernel->prependToMiddlewarePriority(MultiPanelMiddleware::class);
+        }
     }
 }
