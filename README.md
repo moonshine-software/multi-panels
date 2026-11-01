@@ -18,9 +18,10 @@ Package for creating multiple admin panels in one MoonShine application with ind
 
 ## Requirements
 
-- MoonShine 4.4+
-- Laravel 10+
-- PHP 8.2+
+| MoonShine | Laravel | PHP |
+|-----------|---------|-----|
+| 4.4+ | 10+ | 8.2+ |
+| 5.x | 11+ | 8.4+ |
 
 ## Installation
 
@@ -259,7 +260,7 @@ URLs:
 2. Resources and pages are bound to a specific panel via the `$panel` property
 3. Panel configuration overrides global MoonShine settings
 4. Routes are built automatically based on the panel prefix
-5. The `MultiPanelMiddleware` determines the current panel and applies its settings
+5. The `MultiPanelMiddleware` determines the current panel and applies its settings. It runs before authentication, so a panel can define its own `auth` section with a separate guard
 
 ## Service Provider Registration
 
